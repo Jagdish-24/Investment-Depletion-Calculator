@@ -343,7 +343,7 @@ input[type="number"]:focus {
 
 .copy-btn:active {
     /* Instant feedback */
-    background-color: #b08d22;
+    background-color: oklch(65.841% 0.12411 150);
 }
 
 /* Overriding any browser input styles */
