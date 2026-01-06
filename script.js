@@ -130,7 +130,7 @@ function init() {
 function calculate() {
     // Get Raw Values
     const capital = parseFormattedNumber(document.getElementById('capital').value);
-    const fdRate = parseFloat(document.getElementById('fdRate').value) || 0;
+    const fdRateQuery = parseFloat(document.getElementById('fdRate').value) || 0;
     const niftyRate = parseFloat(document.getElementById('niftyRate').value) || 0;
     const withdrawal = parseFormattedNumber(document.getElementById('withdrawal').value);
     const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
@@ -146,14 +146,22 @@ function calculate() {
     document.getElementById('fd-initial').textContent = fdPrincipal.toLocaleString('en-IN', {style: 'currency', currency: 'INR', maximumFractionDigits: 0});
     document.getElementById('nifty-initial').textContent = niftyPrincipal.toLocaleString('en-IN', {style: 'currency', currency: 'INR', maximumFractionDigits: 0});
 
-    // --- FD Calculation ---
+    // --- FD Calculation (Variable Rate) ---
+    // Rule: First year (0-11 months) is fixed at 6.0%. Subsequent years use the input rate.
     let balance = fdPrincipal;
     let months = 0;
-    const monthlyRate = (fdRate / 100) / 12;
+    
+    // Rates per month
+    const rateYear1 = (6.0 / 100) / 12;      // Fixed 6% first year
+    const rateYear2Plus = (fdRateQuery / 100) / 12; // User input rate thereafter
 
-    // Cap at 100 years to prevent infinite loops
+    // Build timeline cap (e.g. 100 years)
     while (balance > 0 && months < 1200) {
-        const interest = balance * monthlyRate;
+        // Determine rate based on month index
+        // Months 0-11 use Year 1 rate. Month 12+ use Year 2+ rate.
+        const currentMonthlyRate = (months < 12) ? rateYear1 : rateYear2Plus;
+        
+        const interest = balance * currentMonthlyRate;
         balance = balance + interest - withdrawal;
         months++;
     }
@@ -180,11 +188,16 @@ function calculate() {
     document.getElementById('fd-details').textContent = fdSub;
 
 
-    // --- Nifty Calculation ---
+    // --- Nifty Calculation (Linked Duration) ---
+    // Duration strictly linked to FD survival months
     const yearsFloat = months / 12;
+    
+    // Compound Interest Formula: A = P(1 + r/n)^(nt) -> assuming annual compounding (n=1) for simpler CAGR match
+    // OR monthly compounding to match FD precision? 
+    // Standard CAGR applies annually. P * (1 + r)^t
     const niftyGross = niftyPrincipal * Math.pow((1 + niftyRate / 100), yearsFloat);
     
-    // Tax Logic
+    // Tax Logic (Profit Only)
     const gains = niftyGross - niftyPrincipal;
     const tax = gains > 0 ? gains * (taxRate / 100) : 0;
     const niftyNet = niftyGross - tax;
@@ -193,7 +206,8 @@ function calculate() {
     document.getElementById('nifty-value').textContent = niftyNet.toLocaleString('en-IN', {style: 'currency', currency: 'INR', maximumFractionDigits: 0});
     
     document.getElementById('nifty-gross').textContent = `Gross: ${niftyGross.toLocaleString('en-IN', {style: 'currency', currency: 'INR', maximumFractionDigits: 0})}`;
-    document.getElementById('nifty-tax').textContent = `Tax (${taxRate}%): ${tax.toLocaleString('en-IN', {style: 'currency', currency: 'INR', maximumFractionDigits: 0})}`;
+    // Explicitly show tax is on profit
+    document.getElementById('nifty-tax').textContent = `Tax (${taxRate}% on Gains): ${tax.toLocaleString('en-IN', {style: 'currency', currency: 'INR', maximumFractionDigits: 0})}`;
     
     document.getElementById('nifty-words').textContent = getNumberToWords(Math.round(niftyNet));
 }
