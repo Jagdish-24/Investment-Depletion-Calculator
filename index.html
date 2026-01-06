@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Investment Depletion Calculator</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Header -->
+            <header>
+                <div>
+                    <h1>Financial Projection Engine</h1>
+                    <p>Real-time Corpus Depletion & Growth Analysis</p>
+                </div>
+                <div class="strategy-badge">
+                    <div class="label">Strategy</div>
+                    <div class="value">50:50 Split</div>
+                </div>
+            </header>
+
+            <div class="main-content">
+                <!-- Left Panel: Inputs -->
+                <div class="input-section">
+                    <!-- Capital Input -->
+                    <div class="form-group">
+                        <label for="capital">Total Capital</label>
+                        <div class="input-wrapper">
+                            <span class="currency-symbol">₹</span>
+                            <input
+                                type="text"
+                                id="capital"
+                                value="3,00,00,000"
+                                placeholder="0"
+                                class="input-field"
+                            />
+                        </div>
+                        <div class="helper-text" id="capital-words">
+                            Three Crore
+                        </div>
+                    </div>
+
+                    <!-- Rates Row -->
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="fdRate">FD Return (%)</label>
+                            <div class="input-wrapper">
+                                <input
+                                    type="number"
+                                    id="fdRate"
+                                    value="6.4"
+                                    step="0.1"
+                                    class="input-field no-symbol"
+                                />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="niftyRate">Nifty Return (%)</label>
+                            <div class="input-wrapper">
+                                <input
+                                    type="number"
+                                    id="niftyRate"
+                                    value="12"
+                                    step="0.5"
+                                    class="input-field no-symbol"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Withdrawal Input -->
+                    <div class="form-group">
+                        <label for="withdrawal">Monthly Withdrawal</label>
+                        <div class="input-wrapper">
+                            <span class="currency-symbol">₹</span>
+                            <input
+                                type="text"
+                                id="withdrawal"
+                                value="2,00,000"
+                                placeholder="0"
+                                class="input-field"
+                            />
+                        </div>
+                        <div class="helper-text" id="withdrawal-words">
+                            Two Lakh
+                        </div>
+                    </div>
+
+                    <!-- Tax Settings -->
+                    <div class="tax-section">
+                        <label>Tax Rate on Gains</label>
+                        <div class="tax-input-group">
+                            <input
+                                type="number"
+                                id="taxRate"
+                                value="12"
+                                class="tax-input"
+                            />
+                            <span>%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Results -->
+                <div class="results-section">
+                    <div>
+                        <div class="result-card">
+                            <div class="result-label">
+                                Fixed Deposit Survival Time
+                            </div>
+                            <div class="result-value" id="fd-duration">
+                                Calculating...
+                            </div>
+                            <div class="result-subtext" id="fd-details">
+                                Until corpus hits ₹0
+                            </div>
+                        </div>
+
+                        <div class="result-card">
+                            <div class="result-label">
+                                Nifty 50 Future Value (Post-Tax)
+                            </div>
+                            <div class="result-value accent" id="nifty-value">
+                                Calculating...
+                            </div>
+                            <div class="breakdown-list">
+                                <div id="nifty-gross">Gross: ₹0</div>
+                                <div id="nifty-tax">Tax (12%): ₹0</div>
+                            </div>
+                            <span class="word-value" id="nifty-words"></span>
+                        </div>
+                    </div>
+
+                    <div class="results-footer">
+                        <div class="initial-split">
+                            <div>Initial Split</div>
+                            <div>FD: <span id="fd-initial">₹0</span></div>
+                            <div>Nifty: <span id="nifty-initial">₹0</span></div>
+                        </div>
+                        <button class="copy-btn" onclick="copySummary()">
+                            Copy Summary
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>

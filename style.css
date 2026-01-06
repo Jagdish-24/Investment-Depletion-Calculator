@@ -1,0 +1,354 @@
+/* Global Styles & Reset */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+:root {
+    --bg-body: #121212; /* Deep Charcoal */
+    --bg-card: #1e1e1e; /* Lighter Charcoal for cards */
+    --text-primary: #e2e8f0; /* Off-white */
+    --text-secondary: #94a3b8; /* Muted slate */
+    --text-muted: #64748b; /* Darker slate */
+    --accent: oklch(76% 0.13861 150); /* Metallic Green */
+    --accent-hover: oklch(71% 0.13556 150); /* Darker Green */
+    --border: #333333; /* Subtle border */
+    --input-bg: #262626; /* Dark input background */
+    --success: #10b981; /* Emerald */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    line-height: 1.5;
+}
+
+/* Layout Container */
+.container {
+    background-color: var(--bg-card);
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 8px; /* Sharper corners for premium feel */
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* No shadows for flat, clean look, or very subtle */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-card);
+}
+
+header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+header p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+.strategy-badge {
+    text-align: right;
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .strategy-badge {
+        display: block;
+    }
+}
+
+.strategy-badge .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.strategy-badge .value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+/* Main Content Grid */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+    .main-content {
+        grid-template-columns: 55% 45%;
+    }
+}
+
+/* Input Section */
+.input-section {
+    padding: 2rem;
+    background-color: var(--bg-card);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+/* Unified Input Styling */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px; /* Minimal radius */
+}
+
+/* Focus state via parent wrapper or direct input?
+   To make it strictly consistent, we style the input itself to fill the wrapper 
+   or the wrapper to look like the input. 
+   Here, we style the Input field to be the main visual element.
+*/
+
+.input-field,
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    background-color: var(--input-bg);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 0.875rem 1rem; /* Consistent padding */
+    font-family: "Inter", monospace;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    outline: none;
+    height: 48px; /* Fixed height for consistency */
+}
+
+/* Inputs with icons - we need to adjust padding */
+/* We will target specific IDs or use a helper class for padded inputs */
+#capital,
+#withdrawal {
+    padding-left: 2.5rem;
+}
+
+/* Currency Symbol Positioning */
+.currency-symbol {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.input-field:focus,
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: var(--accent);
+    /* No shadow or glow, just sharp border color change */
+}
+
+.helper-text {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    text-align: right;
+    min-height: 1.25em;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+/* Tax Section */
+.tax-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tax-section label {
+    margin-bottom: 0;
+    color: var(--text-secondary);
+}
+
+.tax-input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tax-input {
+    width: 80px;
+    text-align: center;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    height: 36px; /* Slightly smaller for secondary input */
+    outline: none;
+}
+
+.tax-input:focus {
+    border-color: var(--accent);
+}
+
+/* Results Section */
+.results-section {
+    background-color: #000000; /* True black/darkest for contrast */
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 1px solid var(--border);
+}
+
+/* On mobile, border top instead of left */
+@media (max-width: 1023px) {
+    .results-section {
+        border-left: none;
+        border-top: 1px solid var(--border);
+    }
+}
+
+.result-card {
+    margin-bottom: 2.5rem;
+}
+
+.result-card:last-child {
+    margin-bottom: 0;
+}
+
+.result-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.result-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.result-value.accent {
+    color: var(--accent); /* Gold */
+}
+
+.result-subtext {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.breakdown-list {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.word-value {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--accent);
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+/* Footer in Results */
+.results-footer {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.initial-split {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.initial-split div {
+    margin-top: 0.25rem;
+    color: var(--text-muted);
+    font-family: "Inter", monospace;
+}
+
+.copy-btn {
+    background-color: var(--accent);
+    color: #000; /* Black text on gold for classic premium look */
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    /* No transitions */
+}
+
+.copy-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.copy-btn:active {
+    /* Instant feedback */
+    background-color: #b08d22;
+}
+
+/* Overriding any browser input styles */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
